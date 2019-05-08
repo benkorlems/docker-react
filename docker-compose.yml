@@ -1,0 +1,24 @@
+version: '3'
+#specify the services
+services:
+  web:
+    build:
+      # context sets relative path were the Dockerfile is located
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5000:3000"
+    # First arr el makes a placeholder for /app/node_modules folder
+    # Second arr el maps curr dir on host to /app/ dir on container
+    volumes:
+      - /app/node_modules
+      - .:/app
+  tests:
+    build:
+      # context sets relative path were the Dockerfile is located
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
